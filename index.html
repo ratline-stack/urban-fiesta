@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RATLINE</title>
+<style>
+  body {
+    background-color: #0a0a0a;
+    color: #fff;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 14px;
+    overflow: hidden;
+  }
+  pre {
+    margin: auto;
+    line-height: 1.05;
+    letter-spacing: 0.5px;
+    color: #fff;
+    user-select: none;
+  }
+  #ratline {
+    text-align: center;
+  }
+  audio {
+    position: fixed;
+    bottom: -9999px;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  #next {
+    margin-top: 20px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.1;
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  #next:hover {
+    color: #ccc;
+    text-shadow: 0 0 10px #fff;
+  }
+</style>
+</head>
+<body>
+<pre id="ratline">
+RRRRRRRRRRRRRRRRR                  AAA               TTTTTTTTTTTTTTTTTTTTTTTLLLLLLLLLLL             IIIIIIIIIINNNNNNNN        NNNNNNNNEEEEEEEEEEEEEEEEEEEEEE
+R::::::::::::::::R                A:::A              T:::::::::::::::::::::TL:::::::::L             I::::::::IN:::::::N       N::::::NE::::::::::::::::::::E
+R::::::RRRRRR:::::R              A:::::A             T:::::::::::::::::::::TL:::::::::L             I::::::::IN::::::::N      N::::::NE::::::::::::::::::::E
+RR:::::R     R:::::R            A:::::::A            T:::::TT:::::::TT:::::TLL:::::::LL             II::::::IIN:::::::::N     N::::::NEE::::::EEEEEEEEE::::E
+  R::::R     R:::::R           A:::::::::A           TTTTTT  T:::::T  TTTTTT  L:::::L                 I::::I  N::::::::::N    N::::::N  E:::::E       EEEEEE
+  R::::R     R:::::R          A:::::A:::::A                  T:::::T          L:::::L                 I::::I  N:::::::::::N   N::::::N  E:::::E             
+  R::::RRRRRR:::::R          A:::::A A:::::A                 T:::::T          L:::::L                 I::::I  N:::::::N::::N  N::::::N  E::::::EEEEEEEEEE   
+  R:::::::::::::RR          A:::::A   A:::::A                T:::::T          L:::::L                 I::::I  N::::::N N::::N N::::::N  E:::::::::::::::E   
+  R::::RRRRRR:::::R        A:::::A     A:::::A               T:::::T          L:::::L                 I::::I  N::::::N  N::::N:::::::N  E:::::::::::::::E   
+  R::::R     R:::::R      A:::::AAAAAAAAA:::::A              T:::::T          L:::::L                 I::::I  N::::::N   N:::::::::::N  E::::::EEEEEEEEEE   
+  R::::R     R:::::R     A:::::::::::::::::::::A             T:::::T          L:::::L                 I::::I  N::::::N    N::::::::::N  E:::::E             
+  R::::R     R:::::R    A:::::AAAAAAAAAAAAA:::::A            T:::::T          L:::::L         LLLLLL  I::::I  N::::::N     N:::::::::N  E:::::E       EEEEEE
+RR:::::R     R:::::R   A:::::A             A:::::A         TT:::::::TT      LL:::::::LLLLLLLLL:::::LII::::::IIN::::::N      N::::::::NEE::::::EEEEEEEE:::::E
+R::::::R     R:::::R  A:::::A               A:::::A        T:::::::::T      L::::::::::::::::::::::LI::::::::IN::::::N       N:::::::NE::::::::::::::::::::E
+R::::::R     R:::::R A:::::A                 A:::::A       T:::::::::T      L::::::::::::::::::::::LI::::::::IN::::::N        N::::::NE::::::::::::::::::::E
+RRRRRRRR     RRRRRRRAAAAAAA                   AAAAAAA      TTTTTTTTTTT      LLLLLLLLLLLLLLLLLLLLLLLLIIIIIIIIIINNNNNNNN         NNNNNNNEEEEEEEEEEEEEEEEEEEEEE
+</pre>
+<pre id="next" title="Next track" style="cursor:pointer" onclick="location.href='page2.html'">
++-----------------+
+|    N E X T      |
++-----------------+
+</pre>
+<audio id="bg-music" loop preload="auto" src="https://files.catbox.moe/3g99za.mp3"></audio>
+<script>
+  var tracks = [
+    'https://files.catbox.moe/3g99za.mp3'
+  ];
+  var current = 0;
+  var audio = document.getElementById('bg-music');
+  audio.volume = 0.6;
+
+  function playTrack(i) {
+    current = (i + tracks.length) % tracks.length;
+    audio.src = tracks[current];
+    audio.play();
+  }
+
+  document.getElementById('next').addEventListener('click', function() {
+    playTrack(current + 1);
+  });
+
+  audio.play().catch(function() {
+    document.addEventListener('click', function once() {
+      audio.play();
+      document.removeEventListener('click', once);
+    });
+  });
+</script>
+</body>
+</html>
